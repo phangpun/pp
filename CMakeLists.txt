@@ -6,6 +6,8 @@ SET( Sources
     main.cpp
     student.cpp
     student.h
+	argument.cpp
+	argument.h
 )
 
 ADD_EXECUTABLE( ${PROJECT_NAME}
