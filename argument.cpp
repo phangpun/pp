@@ -16,10 +16,16 @@ bool argument::checkfine(std::string _string, const char FLAG, int gradnumber) {
 	case FIRST_INPUT:
 		break;
 	case ADD_INPUT:
+	case FIND_INPUT:
+	case DELETE_INPUT:
 		for (int i = 0; i < size; i++) {
 			if (i == 0) {
 				if (_string.at(i) != ' ') {
 					arg1s = i;
+					if (_string.at(i + 1) == ' ') {
+						arg1e = i;
+						arg_number++;
+					}
 				}
 			}
 			else if (i == size - 1) {
@@ -41,7 +47,10 @@ bool argument::checkfine(std::string _string, const char FLAG, int gradnumber) {
 					}
 				}
 				else if (_string.at(i) == ' ' && _string.at(i + 1) != ' ') {
-					if (arg_number < 2) {
+					if (arg_number < 1) {
+						arg1s = i + 1;
+					}
+					else if (arg_number < 2) {
 						arg2s = i + 1;
 					}
 					else if (arg_number < 3) {
@@ -75,12 +84,78 @@ bool argument::checkfine(std::string _string, const char FLAG, int gradnumber) {
 
 		break;
 	case COMPARE_INPUT:
-		break;
-	case FIND_INPUT:
-		break;
-	case DELETE_INPUT:
-		break;
-	case CHANGE_INPUT:
+		for (int i = 0; i < size; i++) {
+			if (i == 0) {
+				if (_string.at(i) != ' ') {
+					arg1s = i;
+					if (_string.at(i + 1) == ' ') {
+						arg1e = i;
+						arg_number++;
+					}
+				}
+			}
+			else if (i == size - 1) {
+				if (_string.at(i) != ' ') {
+					arg4e = i;
+					arg_number++;
+				}
+			}
+			else
+			{
+				if (_string.at(i) != ' ' && _string.at(i + 1) == ' ') {
+					if (arg_number < 1) {
+						arg1e = i;
+						arg_number++;
+					}
+					else if (arg_number < 2) {
+						arg2e = i;
+						arg_number++;
+					}
+					else if (arg_number < 3) {
+						arg3e = i;
+						arg_number++;
+					}
+				}
+				else if (_string.at(i) == ' ' && _string.at(i + 1) != ' ') {
+					if (arg_number < 1) {
+						arg1s = i + 1;
+					}
+					else if (arg_number < 2) {
+						arg2s = i + 1;
+					}
+					else if (arg_number < 3) {
+						arg3s = i + 1;
+					}
+					else if (arg_number < 4) {
+						arg4s = i + 1;
+					}
+				}
+			}
+		}
+
+		arg1 = _string.substr(arg1s, (arg1e - arg1s) + 1);
+		arg2 = _string.substr(arg2s, (arg2e - arg2s) + 1);
+		arg3 = _string.substr(arg3s, (arg3e - arg3s) + 1);
+		arg4 = _string.substr(arg4s, (arg4e - arg4s) + 1);
+
+		try {
+			std::stoi(arg1);
+			std::stoi(arg3);
+		}
+		catch (std::exception) {
+			return false;
+		}
+
+		if (gradnumber == 0) {
+			try {
+				std::stoi(arg4);
+			}
+			catch (std::exception) {
+				return false;
+			}
+		}
+
+		return true;
 		break;
 	case GRAD:
 		break;
@@ -111,6 +186,8 @@ bool argument::isWrong(const char FLAG, int gradnumber) {
 		if (_string.size() > 1 || _string.size() == 0) return true;
 		break;
 	case ADD_INPUT :
+	case FIND_INPUT :
+	case DELETE_INPUT:
 		if (number() != 3) return true;
 		else {
 			if (!checkfine(_string, FLAG, gradnumber)) {
@@ -119,12 +196,12 @@ bool argument::isWrong(const char FLAG, int gradnumber) {
 		}
 		break;
 	case COMPARE_INPUT :
-		break;
-	case FIND_INPUT :
-		break;
-	case DELETE_INPUT :
-		break;
-	case CHANGE_INPUT :
+		if (number() != 4) return true;
+		else {
+			if (!checkfine(_string, FLAG, gradnumber)) {
+				return true;
+			}
+		}
 		break;
 	case GRAD :
 		if (_string.size() > 1 || _string.size() == 0) return true;
@@ -172,9 +249,22 @@ void argument::toinput(std::string *name, int *stunum, std::string *labname) {
 	*stunum = std::stoi(arg2);
 	*labname = arg3;
 }
-/*
-void toinput(std::string name, int stunum, int freshmenclass);
 
-void toinput(int index, std::string name, int stunum, std::string labname);
-void toinput(int index, std::string name, int stunum, int freshmenclass);
-*/
+void argument::toinput(std::string* name, int* stunum, int* freshmenclass) {
+	*name = arg1;
+	*stunum = std::stoi(arg2);
+	*freshmenclass = std::stoi(arg3);
+}
+
+void argument::toinput(int* index, std::string* name, int* stunum, std::string* labname) {
+	*index = std::stoi(arg1);
+	*name = arg2;
+	*stunum = std::stoi(arg3);
+	*labname = arg4;
+}
+void argument::toinput(int* index, std::string* name, int* stunum, int* freshmenclass) {
+	*index = std::stoi(arg1);
+	*name = arg2;
+	*stunum = std::stoi(arg3);
+	*freshmenclass = std::stoi(arg4);
+}

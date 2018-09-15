@@ -10,8 +10,7 @@ const char ADD_INPUT = 1;
 const char COMPARE_INPUT = 2;
 const char FIND_INPUT = 3;
 const char DELETE_INPUT = 4;
-const char CHANGE_INPUT = 5;
-const char GRAD = 6;
+const char GRAD = 5;
 
 
 class argument {
@@ -33,10 +32,8 @@ public:
 	void print();
 	
 	void toinput(std::string* name, int* stunum, std::string* labname);
-	/*
-	void toinput(std::string name, int stunum, int freshmenclass);
-
-	void toinput(int index, std::string name, int stunum, std::string labname);
-	void toinput(int index, std::string name, int stunum, int freshmenclass);
-	*/
+	void toinput(std::string* name, int* stunum, int* freshmenclass);
+	void toinput(int* index, std::string* name, int* stunum, std::string* labname);
+	void toinput(int* index, std::string* name, int* stunum, int* freshmenclass);
+	
 };
