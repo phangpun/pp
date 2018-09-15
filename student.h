@@ -6,6 +6,9 @@ class Manager{
 	// ******Modify here******
 	// You need to properly define member variable in Manager class
  private:
+	 Student * RightMost_stu = NULL;
+	 Student * LeftMost_stu = NULL;
+	 int numberofstu = 0;
  protected:
  public:
 	// ******Modify here******
@@ -26,28 +29,48 @@ class Student{
 	// ******Modify here******
 	// You need to properly define member variable in Student class
  private:
+	 std::string m_name;
+	 int m_stunum;
+	 int m_index;
+
+	 Student *m_Right;
+	 Student *m_Left;
+
  protected:
  public:
 	// ******Modify here******
 	// You need to implement get function which prints out every information about student argument in pure virtual function here
+	 void getInfo();
+	 void setInfo(std::string name, int stunum);
+	 void setRptr(Student * studentptr);
+	 void setLptr(Student * studentptr);
+	 void getRptr(Student * studentptr);
+	 void getLptr(Student * studentptr);
+
 };
 
 class Grad_Student: public Student{
 	// ******Modify here******
 	// You need to properly define member variable in Grad_Student class
  private:
+	 std::string m_labname;
  protected:
  public:	
 	// ******Modify here******
 	// You need to implement get function in detail
+	 void getInfo();
+	 void setLab(std::string labname);
 };
 
 class Undergrad_Student: public Student{
 	// ******Modify here******
 	// You need to properly define member variable in Undergrad_Student class
  private:
+	 int m_freshmenclass;
  protected:
  public:
 	// ******Modify here******
 	// You need to implement get function in detail
+	 void getInfo();
+	 void setLab(int freshmenclass);
 };

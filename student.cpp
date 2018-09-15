@@ -15,6 +15,18 @@ int Manager::add_student(std::string name, int stunum, std::string labname)
 {
   // Adds Grad_Student object with given argument
   // Returns the total number of objects in the student array after adding
+	Grad_Student* GS = new Grad_Student;
+	GS->setInfo(name, stunum, labname);
+	if (numberofstu == 0) {
+		RightMost_stuptr = GS;
+		LeftMost_stuptr = GS;
+		numberofstu++;
+	}
+	else {
+		GS->setRptr(LeftMost_stuptr);
+		LeftMost_stuptr = GS;
+		numberofstu++;
+	}
   std::cout << "add graduate student DONE" << std::endl;
   return 0;
 };
@@ -23,6 +35,18 @@ int Manager::add_student(std::string name, int stunum, int freshmenclass)
 {
   // Creates Undergrad_Student object with given argument
   // Returns the total number of objects in the student array after adding
+	Undergrad_Student* UGS = new Undergrad_Student;
+	UGS->setInfo(name, stunum, freshmenclass);
+	if (numberofstu == 0) {
+		RightMost_stuptr = UGS;
+		LeftMost_stuptr = UGS;
+		numberofstu++;
+	}
+	else {
+		UGS->setRptr(LeftMost_stuptr);
+		LeftMost_stuptr = UGS;
+		numberofstu++;
+	}
   std::cout << "add undergraduate student DONE" << std::endl;
   return 0;
 };
