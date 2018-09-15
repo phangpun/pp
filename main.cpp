@@ -25,9 +25,9 @@ int main()
   std::string inputstring;
   argument inputcommand;
 
+
   while(isLast){
 	std::cout << "\n\n\n*---------------------Welcome to Student Management System---------------------*" << std::endl;
-
 	std::cout << "What do you want to do?\n1. Add student:a\n2. Compare student:c \n3. Find student:f\n4. Delete student:d\n5. Change student:c\n6. Print all student:p\n7. Quit:q" << std::endl;
 
 	// ******Modify here****** 
@@ -35,8 +35,10 @@ int main()
 	while (inputcommand.isWrong(FIRST_INPUT)) {
 		std::getline(std::cin, inputstring);
 		inputcommand.set(inputstring);
-		std::cout << "<<< Error : You type too long argument >>>" << std::endl << std::endl;
-		std::cout << "What do you want to do?\n1. Add student:a\n2. Compare student:c \n3. Find student:f\n4. Delete student:d\n5. Change student:c\n6. Print all student:p\n7. Quit:q" << std::endl;
+		if (inputcommand.isWrong(FIRST_INPUT)) {
+			std::cout << "Invalid argument" << std::endl << std::endl;
+			std::cout << "What do you want to do?\n1. Add student:a\n2. Compare student:c \n3. Find student:f\n4. Delete student:d\n5. Change student:c\n6. Print all student:p\n7. Quit:q" << std::endl;
+		}
 	}
 	
 	command = inputcommand.firstchar();
@@ -50,35 +52,59 @@ int main()
 		// ******Modify here****** 
 		//You need to handle wrong argument format
 
-		while (isLast) {
-		  std::cin >> isgrad;
-		  if (isgrad == 1){
-		    std::cout << "\nFormat: [name stunum labname]" << std::endl;
+		while (inputcommand.isWrong(GRAD)) {
+			std::getline(std::cin, inputstring);
+			inputcommand.set(inputstring);
+			if (inputcommand.isWrong(GRAD)) {
+				std::cout << "Invalid argument" << std::endl << std::endl;
+				std::cout << "Type\nUndergraduate:0 Graduat:1" << std::endl;
+			}
+		}
+		isgrad = std::stoi(inputcommand.get());
+		//isgrad = atoi(inputcommand.get().c_str());
+		std::cout << isgrad << std::endl;
+		//isgrad = static_cast<int>(inputcommand.firstchar()) - 48;
+		
+		if (isgrad == 1){
+		std::cout << "\nFormat: [name stunum labname]" << std::endl;
 		  
-		    // ******Modify here****** 
-		    //You need to handle wrong argument format
-		    std::cin >> name >> stunum >> labname;
-		    myman.add_student(name, stunum, labname);
-			isLast = false;
-		  }
+		// ******Modify here****** 
+		//You need to handle wrong argument format
 
-		  else if (isgrad == 0){
-		    std::cout << "\nFormat: [name stunum freshmenclass] " << std::endl;
-		  
-		    // ******Modify here****** 
-		    //You need to handle wrong argument format
-		    std::cin >> name >> stunum >> freshmenclass;
-		    myman.add_student(name, stunum, freshmenclass);		  
-			isLast = false;
-		  }
-		  
-		  else{
-		    std::cout << "\n(Error : You type the wrong number)" << std::endl;
-		    std::cout << "Type\nUndergraduate:0 Graduat:1" << std::endl;
-		  }
+		while (inputcommand.isWrong(ADD_INPUT)) {
+			std::getline(std::cin, inputstring);
+			inputcommand.set(inputstring);
+			if (inputcommand.isWrong(ADD_INPUT)) {
+				std::cout << "Invalid argument" << std::endl << std::endl;
+				std::cout << "Type\nUndergraduate:0 Graduat:1" << std::endl;
+			}
 		}
 
-		isLast = true; // initialize pending condition.
+
+		std::cin >> name >> stunum >> labname;
+		myman.add_student(name, stunum, labname);
+		isLast = false;
+		}
+
+		else if (isgrad == 0){
+		std::cout << "\nFormat: [name stunum freshmenclass] " << std::endl;
+		  
+		// ******Modify here****** 
+		//You need to handle wrong argument format
+
+		while (inputcommand.isWrong(ADD_INPUT)) {
+			std::getline(std::cin, inputstring);
+			inputcommand.set(inputstring);
+			if (inputcommand.isWrong(ADD_INPUT)) {
+				std::cout << "Invalid argument" << std::endl << std::endl;
+				std::cout << "Type\nUndergraduate:0 Graduat:1" << std::endl;
+			}
+		}
+
+		std::cin >> name >> stunum >> freshmenclass;
+		myman.add_student(name, stunum, freshmenclass);		  
+		isLast = false;
+		}
 		
 	  }break;
 
@@ -105,7 +131,7 @@ int main()
 		  }
 
 		  else{
-		    std::cout << "\n(Error : You type the wrong number)" << std::endl;
+		    std::cout << "\nInvalid argument" << std::endl;
 		    std::cout << "Type\nUndergraduated:0 Graduated:1" << std::endl;
 		  }
 		}
@@ -139,7 +165,7 @@ int main()
 		  }
 
 		  else{
-		    std::cout << "\n(Error : You type the wrong number)" << std::endl;
+		    std::cout << "\nInvalid argument" << std::endl;
 		    std::cout << "Type\nUndergraduated:0 Graduated:1" << std::endl;
 		  }
 		}
@@ -173,7 +199,7 @@ int main()
 			  myman.find_student(name, stunum, freshmenclass);
 			}
 			else {
-				std::cout << "\n(Error : You type the wrong number)" << std::endl;
+				std::cout << "\nInvalid argument" << std::endl;
 				std::cout << "Type\nUndergraduated:0 Graduated:1" << std::endl;
 			}
 		}
@@ -190,7 +216,8 @@ int main()
 	  }break;
 
 	  default:{
-		std::cout << "Invalid argument" << std::endl;
+		  std::cout << "Invalid argument" << std::endl;
+		  inputcommand.set("ARGUMENT_STRING");
 	  }break;
 	}
 	

@@ -11,6 +11,7 @@ const char COMPARE_INPUT = 2;
 const char FIND_INPUT = 3;
 const char DELETE_INPUT = 4;
 const char CHANGE_INPUT = 5;
+const char GRAD = 6;
 
 
 class argument {
@@ -20,6 +21,7 @@ private:
 protected:
 public:
 	void set(std::string inputstring);
+	std::string get();
 	char firstchar();
 	bool isWrong(const char FLAG);
 	int number();

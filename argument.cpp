@@ -7,6 +7,10 @@ void argument::set(std::string inputstring) {
 	_string = inputstring;
 }
 
+std::string argument::get() {
+	return _string;
+}
+
 char argument::firstchar() {
 	return _string.at(0);
 }
@@ -18,6 +22,11 @@ bool argument::isWrong(const char FLAG) {
 		if (_string.size() > 1) return true;
 		break;
 	case ADD_INPUT :
+		if (this->number() != 3) return true;
+		else if (this->firstchar() == ' ') return true;
+		else {
+
+		}
 		break;
 	case COMPARE_INPUT :
 		break;
@@ -26,6 +35,13 @@ bool argument::isWrong(const char FLAG) {
 	case DELETE_INPUT :
 		break;
 	case CHANGE_INPUT :
+		break;
+	case GRAD :
+		if (_string.size() > 1) return true;
+		else if ( static_cast<int>(this->firstchar()) - 48 != 0 &&
+			static_cast<int>(this->firstchar()) - 48 != 1) {
+			return true;
+		}
 		break;
 	default:
 		break;
