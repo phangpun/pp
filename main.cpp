@@ -32,21 +32,11 @@ int main()
 
 	// ******Modify here****** 
 	//You need to handle wrong argument format
-	std::getline(std::cin, inputstring);
-	//std::cin >> inputstring;
-	inputcommand.set(inputstring);
-	
-	std::cout << inputcommand.number() << std::endl;
-	inputcommand.print();
-	
-		
-	while (inputcommand.isWrong()) {
-		std::cout << "What do you want to do?\n1. Add student:a\n2. Compare student:c \n3. Find student:f\n4. Delete student:d\n5. Change student:c\n6. Print all student:p\n7. Quit:q" << std::endl;
-		std::cout << "Error : You type too long argument" << std::endl;
+	while (inputcommand.isWrong(FIRST_INPUT)) {
 		std::getline(std::cin, inputstring);
 		inputcommand.set(inputstring);
-		
-		std::cout << inputcommand.number() << std::endl;
+		std::cout << "<<< Error : You type too long argument >>>" << std::endl << std::endl;
+		std::cout << "What do you want to do?\n1. Add student:a\n2. Compare student:c \n3. Find student:f\n4. Delete student:d\n5. Change student:c\n6. Print all student:p\n7. Quit:q" << std::endl;
 	}
 	
 	command = inputcommand.firstchar();

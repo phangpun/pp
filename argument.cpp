@@ -11,10 +11,26 @@ char argument::firstchar() {
 	return _string.at(0);
 }
 
-bool argument::isWrong() {
-	if (_string.size() > 1) {
-		return true;
+bool argument::isWrong(const char FLAG) {
+	switch (FLAG)
+	{
+	case FIRST_INPUT :
+		if (_string.size() > 1) return true;
+		break;
+	case ADD_INPUT :
+		break;
+	case COMPARE_INPUT :
+		break;
+	case FIND_INPUT :
+		break;
+	case DELETE_INPUT :
+		break;
+	case CHANGE_INPUT :
+		break;
+	default:
+		break;
 	}
+
 	return false;
 }
 
@@ -44,4 +60,12 @@ int argument::number() {
 void argument::print() {
 	std::cout << "print() : " << _string << std::endl;
 }
+/*
+void toinput(std::string name, int stunum, std::string labname) {
 
+}
+void toinput(std::string name, int stunum, int freshmenclass);
+
+void toinput(int index, std::string name, int stunum, std::string labname);
+void toinput(int index, std::string name, int stunum, int freshmenclass);
+*/
