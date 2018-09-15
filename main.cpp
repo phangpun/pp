@@ -61,49 +61,47 @@ int main()
 			}
 		}
 		isgrad = std::stoi(inputcommand.get());
-		//isgrad = atoi(inputcommand.get().c_str());
-		std::cout << isgrad << std::endl;
-		//isgrad = static_cast<int>(inputcommand.firstchar()) - 48;
 		
 		if (isgrad == 1){
-		std::cout << "\nFormat: [name stunum labname]" << std::endl;
+			std::cout << "\nFormat: [name stunum labname]" << std::endl;
 		  
-		// ******Modify here****** 
-		//You need to handle wrong argument format
+			// ******Modify here****** 
+			//You need to handle wrong argument format
 
-		while (inputcommand.isWrong(ADD_INPUT)) {
-			std::getline(std::cin, inputstring);
-			inputcommand.set(inputstring);
-			if (inputcommand.isWrong(ADD_INPUT)) {
-				std::cout << "Invalid argument" << std::endl << std::endl;
-				std::cout << "Type\nUndergraduate:0 Graduat:1" << std::endl;
+			while (inputcommand.isWrong(ADD_INPUT, isgrad)) {
+				std::getline(std::cin, inputstring);
+				inputcommand.set(inputstring);
+				if (inputcommand.isWrong(ADD_INPUT, isgrad)) {
+					std::cout << "Invalid argument" << std::endl << std::endl;
+					std::cout << "Format: [name stunum labname]" << std::endl;
+				}
+				else {
+					break;
+				}
 			}
-		}
 
-
-		std::cin >> name >> stunum >> labname;
-		myman.add_student(name, stunum, labname);
-		isLast = false;
+			inputcommand.toinput(&name, &stunum, &labname);
+			//std::cin >> name >> stunum >> labname;
+			myman.add_student(name, stunum, labname);
 		}
 
 		else if (isgrad == 0){
-		std::cout << "\nFormat: [name stunum freshmenclass] " << std::endl;
+			std::cout << "\nFormat: [name stunum freshmenclass] " << std::endl;
 		  
-		// ******Modify here****** 
-		//You need to handle wrong argument format
+			// ******Modify here****** 
+			//You need to handle wrong argument format
 
-		while (inputcommand.isWrong(ADD_INPUT)) {
-			std::getline(std::cin, inputstring);
-			inputcommand.set(inputstring);
-			if (inputcommand.isWrong(ADD_INPUT)) {
-				std::cout << "Invalid argument" << std::endl << std::endl;
-				std::cout << "Type\nUndergraduate:0 Graduat:1" << std::endl;
+			while (inputcommand.isWrong(ADD_INPUT, isgrad)) {
+				std::getline(std::cin, inputstring);
+				inputcommand.set(inputstring);
+				if (inputcommand.isWrong(ADD_INPUT, isgrad)) {
+					std::cout << "Invalid argument" << std::endl << std::endl;
+					std::cout << "Format: [name stunum labname]1" << std::endl;
+				}
 			}
-		}
 
-		std::cin >> name >> stunum >> freshmenclass;
-		myman.add_student(name, stunum, freshmenclass);		  
-		isLast = false;
+			std::cin >> name >> stunum >> freshmenclass;
+			myman.add_student(name, stunum, freshmenclass);		  
 		}
 		
 	  }break;

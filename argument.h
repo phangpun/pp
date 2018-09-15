@@ -17,17 +17,23 @@ const char GRAD = 6;
 class argument {
 private:
 	std::string _string = "ARGUMENT_STRING";
-	
+	std::string arg1;
+	std::string arg2;
+	std::string arg3;
+	std::string arg4;
+	bool checkfine(std::string _string, const char FLAG, int gradnumber);
+
 protected:
 public:
 	void set(std::string inputstring);
 	std::string get();
 	char firstchar();
-	bool isWrong(const char FLAG);
+	bool isWrong(const char FLAG, int gradnumber = 0);
 	int number();
 	void print();
+	
+	void toinput(std::string* name, int* stunum, std::string* labname);
 	/*
-	void toinput(std::string name, int stunum, std::string labname);
 	void toinput(std::string name, int stunum, int freshmenclass);
 
 	void toinput(int index, std::string name, int stunum, std::string labname);
