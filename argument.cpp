@@ -10,7 +10,8 @@ bool argument::checkfine(std::string _string, const char FLAG, int gradnumber) {
 	int arg4s = -1, arg4e = -1;
 	int arg_number = 0;
 
-
+	int testint;
+	
 	switch (FLAG)
 	{
 	case FIRST_INPUT:
@@ -64,19 +65,18 @@ bool argument::checkfine(std::string _string, const char FLAG, int gradnumber) {
 		arg2 = _string.substr(arg2s, (arg2e - arg2s) + 1);
 		arg3 = _string.substr(arg3s, (arg3e - arg3s) + 1);
 
-		try {
-			std::stoi(arg2);
-		}
-		catch (std::exception) {
-			return false;
+		for (unsigned int i = 0; i < arg2.size(); i++) {
+			testint = static_cast<int>(arg2.at(i));
+			if (static_cast<int>(arg2.at(i)) < '0' ||
+				static_cast<int>(arg2.at(i)) > '9')
+				return false;
 		}
 
 		if (gradnumber == 0) {
-			try {
-				std::stoi(arg3);
-			}
-			catch (std::exception) {
-				return false;
+			for (unsigned int i = 0; i < arg3.size(); i++) {
+				if (static_cast<int>(arg3.at(i)) < '0' ||
+					static_cast<int>(arg3.at(i)) > '9')
+					return false;
 			}
 		}
 
@@ -138,20 +138,23 @@ bool argument::checkfine(std::string _string, const char FLAG, int gradnumber) {
 		arg3 = _string.substr(arg3s, (arg3e - arg3s) + 1);
 		arg4 = _string.substr(arg4s, (arg4e - arg4s) + 1);
 
-		try {
-			std::stoi(arg1);
-			std::stoi(arg3);
+		for (unsigned int i = 0; i < arg1.size(); i++) {
+			if (static_cast<int>(arg1.at(i)) < '0' ||
+				static_cast<int>(arg1.at(i)) > '9')
+				return false;
 		}
-		catch (std::exception) {
-			return false;
+
+		for (unsigned int i = 0; i < arg3.size(); i++) {
+			if (static_cast<int>(arg3.at(i)) < '0' ||
+				static_cast<int>(arg3.at(i)) > '9')
+				return false;
 		}
 
 		if (gradnumber == 0) {
-			try {
-				std::stoi(arg4);
-			}
-			catch (std::exception) {
-				return false;
+			for (unsigned int i = 0; i < arg4.size(); i++) {
+				if (static_cast<int>(arg4.at(i)) < '0' ||
+					static_cast<int>(arg4.at(i)) > '9')
+					return false;
 			}
 		}
 
@@ -205,8 +208,8 @@ bool argument::isWrong(const char FLAG, int gradnumber) {
 		break;
 	case GRAD :
 		if (_string.size() > 1 || _string.size() == 0) return true;
-		else if ( static_cast<int>(firstchar()) - 48 != 0 &&
-			static_cast<int>(firstchar()) - 48 != 1) {
+		else if ( static_cast<int>(firstchar()) != '0' &&
+			static_cast<int>(firstchar()) != '1') {
 			return true;
 		}
 		break;

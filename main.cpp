@@ -94,7 +94,7 @@ int main()
 				inputcommand.set(inputstring);
 				if (inputcommand.isWrong(ADD_INPUT, isgrad)) {
 					std::cout << "Invalid argument" << std::endl << std::endl;
-					std::cout << "Format: [name stunum labname]" << std::endl;
+					std::cout << "Format: [name stunum freshmenclass]" << std::endl;
 				}
 				else break;
 			}
@@ -150,7 +150,7 @@ int main()
 				inputcommand.set(inputstring);
 				if (inputcommand.isWrong(COMPARE_INPUT, isgrad)) {
 					std::cout << "Invalid argument" << std::endl << std::endl;
-					std::cout << "Format: [index name stunum labname]" << std::endl;
+					std::cout << "Format: [index name stunum freshmenclass]" << std::endl;
 				}
 				else break;
 			}
@@ -206,7 +206,7 @@ int main()
 				inputcommand.set(inputstring);
 				if (inputcommand.isWrong(FIND_INPUT, isgrad)) {
 					std::cout << "Invalid argument" << std::endl << std::endl;
-					std::cout << "Format: [name stunum labname]" << std::endl;
+					std::cout << "Format: [name stunum freshmenclass]" << std::endl;
 				}
 				else break;
 			}
@@ -261,7 +261,7 @@ int main()
 				inputcommand.set(inputstring);
 				if (inputcommand.isWrong(DELETE_INPUT, isgrad)) {
 					std::cout << "Invalid argument" << std::endl << std::endl;
-					std::cout << "Format: [name stunum labname]" << std::endl;
+					std::cout << "Format: [name stunum freshmenclass]" << std::endl;
 				}
 				else break;
 			}
