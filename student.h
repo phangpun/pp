@@ -7,22 +7,25 @@ class Student{
 	// You need to properly define member variable in Student class
  private:
  protected:
+	 int m_index = 0;
+	 int m_stunum = 0;
+	 std::string m_name = "M_NAME";
+
 	 Student* m_Rightptr;
 	 Student* m_Leftptr;
  public:
 	// ******Modify here******
 	// You need to implement get function which prints out every information about student argument in pure virtual function here
-	 int m_index;
-	 int m_stunum;
-	 std::string m_name;
+
 
 	 virtual void getInfo();
 	 virtual void setInfo(int index, std::string name, int stunum);
 	 void setRptr(Student* studentptr);
 	 void setLptr(Student* studentptr);
-	 Student* getRptr(Student* studentptr);
-	 Student* getLptr(Student* studentptr);
+	 Student* getRptr();
+	 Student* getLptr();
 
+	 int getindex();
 	 std::string getname();
 	 int getstunum();
 
@@ -33,10 +36,11 @@ class Grad_Student: public Student{
 	// You need to properly define member variable in Grad_Student class
  private:
  protected:
-	 std::string m_labname;
+	 std::string m_labname = "M_LAB_NAME";
  public:	
 	// ******Modify here******
 	// You need to implement get function in detail
+
 	 void getInfo();
 	 void setInfo(int index, std::string name, int stunum, std::string labname);
 
@@ -48,7 +52,7 @@ class Undergrad_Student: public Student{
 	// You need to properly define member variable in Undergrad_Student class
  private:
  protected:
-	 int m_freshmenclass;
+	 int m_freshmenclass = 1;
  public:
 	// ******Modify here******
 	// You need to implement get function in detail
@@ -68,7 +72,8 @@ private:
 	Student* printptr = NULL;
 	int numberofstu = 0;
 
-	Student** indexArray = new Student*[300];
+	Grad_Student** Grad_indexArray = new Grad_Student*[300];
+	Undergrad_Student** Undergrad_indexArray = new Undergrad_Student*[300];
 protected:
 public:
 	// ******Modify here******
@@ -83,6 +88,7 @@ public:
 	int delete_student(std::string name, int stunum, int freshmenclass);
 	int print_all();
 
+	~Manager();
 };
 
 bool operator == (const Student& x, const Student& y);
