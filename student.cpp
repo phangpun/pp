@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "student.h"
 
 // //****************************************************************
@@ -16,16 +17,14 @@ int Manager::add_student(std::string name, int stunum, std::string labname)
   // Adds Grad_Student object with given argument
   // Returns the total number of objects in the student array after adding
 	Grad_Student* GS = new Grad_Student;
-	GS->setInfo(name, stunum, labname);
+	GS->setInfo(++numberofstu, name, stunum, labname);
 	if (numberofstu == 0) {
 		RightMost_stuptr = GS;
 		LeftMost_stuptr = GS;
-		numberofstu++;
 	}
 	else {
 		GS->setRptr(LeftMost_stuptr);
 		LeftMost_stuptr = GS;
-		numberofstu++;
 	}
   std::cout << "add graduate student DONE" << std::endl;
   return 0;
@@ -36,16 +35,14 @@ int Manager::add_student(std::string name, int stunum, int freshmenclass)
   // Creates Undergrad_Student object with given argument
   // Returns the total number of objects in the student array after adding
 	Undergrad_Student* UGS = new Undergrad_Student;
-	UGS->setInfo(name, stunum, freshmenclass);
+	UGS->setInfo(++numberofstu, name, stunum, freshmenclass);
 	if (numberofstu == 0) {
 		RightMost_stuptr = UGS;
 		LeftMost_stuptr = UGS;
-		numberofstu++;
 	}
 	else {
 		UGS->setRptr(LeftMost_stuptr);
 		LeftMost_stuptr = UGS;
-		numberofstu++;
 	}
   std::cout << "add undergraduate student DONE" << std::endl;
   return 0;
@@ -119,4 +116,76 @@ bool operator == (const Student& x, const Student& y)
   // p.s. this function must be used in at least "find_student ()" and "compare_student ()"
 
   return true;
+}
+
+
+
+
+// // **********************************************
+// // Class Student area
+// // **********************************************
+
+void Student::getInfo() {
+	std::cout << "index : " << m_index << std::endl;
+	std::cout << "name : " << m_name << std::endl;
+	std::cout << "student number : " << m_stunum << std::endl;
+}
+
+void Student::setInfo(int index, std::string name, int stunum) {
+	m_index = index;
+	m_name = name;
+	m_stunum = stunum;
+}
+
+void Student::setRptr(Student* studentptr) {
+	m_Rightptr = studentptr;
+}
+
+void Student::setLptr(Student* studentptr) {
+	m_Leftptr = studentptr;
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+Student* Student::getRptr(Student* studentptr) {
+	return studentptr->m_Rightptr;
+}
+
+Student* Student::getLptr(Student* studentptr) {
+	return studentptr->m_Leftptr;
+}
+
+
+// // **********************************************
+// // Class Grad_Student area
+// // **********************************************
+
+void Grad_Student::getInfo() {
+	std::cout << "index : " << m_index << std::endl;
+	std::cout << "name : " << m_name << std::endl;
+	std::cout << "student number : " << m_stunum << std::endl;
+	std::cout << "labname : " << m_labname << std::endl;
+}
+
+void Grad_Student::setInfo(int index, std::string name, int stunum, std::string labname) {
+	m_index = index;
+	m_name = name;
+	m_stunum = stunum;
+	m_labname = labname;
+}
+
+// // **********************************************
+// // Class Undergrad_Student area
+// // **********************************************
+
+void Undergrad_Student::getInfo() {
+	std::cout << "index : " << m_index << std::endl;
+	std::cout << "name : " << m_name << std::endl;
+	std::cout << "student number : " << m_stunum << std::endl;
+	std::cout << "labname : " << m_freshmenclass << std::endl;
+}
+
+void Undergrad_Student::setInfo(int index, std::string name, int stunum, int freshmenclass){
+	m_index = index;
+	m_name = name;
+	m_stunum = stunum;
+	m_freshmenclass = freshmenclass;
 }

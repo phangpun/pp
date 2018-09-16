@@ -30,17 +30,17 @@ class Student{
 	// You need to properly define member variable in Student class
  private:
  protected:
+	 int m_index;
 	 std::string m_name;
 	 int m_stunum;
-	 int m_index;
-
-	 Student *m_Right;
-	 Student *m_Left;
+	 
+	 Student *m_Rightptr = NULL;
+	 Student *m_Leftptr = NULL;
  public:
 	// ******Modify here******
 	// You need to implement get function which prints out every information about student argument in pure virtual function here
 	 void getInfo();
-	 void setInfo(std::string name, int stunum);
+	 void setInfo(int index, std::string name, int stunum);
 	 void setRptr(Student * studentptr);
 	 void setLptr(Student * studentptr);
 	 Student* getRptr(Student * studentptr);
@@ -58,7 +58,7 @@ class Grad_Student: public Student{
 	// ******Modify here******
 	// You need to implement get function in detail
 	 void getInfo();
-	 void setInfo(std::string name, int stunum, std::string labname);
+	 void setInfo(int index, std::string name, int stunum, std::string labname);
 };
 
 class Undergrad_Student: public Student{
@@ -71,5 +71,5 @@ class Undergrad_Student: public Student{
 	// ******Modify here******
 	// You need to implement get function in detail
 	 void getInfo();
-	 void setInfo(std::string name, int stunum, int freshmenclass);
+	 void setInfo(int index, std::string name, int stunum, int freshmenclass);
 };
