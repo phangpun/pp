@@ -9,7 +9,6 @@ class Student{
 	// You need to properly define member variable in Student class
  private:
  protected:
-	 int m_index = 0;
 	 int m_stunum = 0;
 	 std::string m_name = "M_NAME";
 
@@ -21,13 +20,12 @@ class Student{
 
 
 	 virtual void getInfo();
-	 virtual void setInfo(int index, std::string name, int stunum);
+	 virtual void setInfo(std::string name, int stunum);
 	 void setRptr(Student* studentptr);
 	 void setLptr(Student* studentptr);
 	 Student* getRptr();
 	 Student* getLptr();
 
-	 int getindex();
 	 std::string getname();
 	 int getstunum();
 
@@ -44,7 +42,7 @@ class Grad_Student: public Student{
 	// You need to implement get function in detail
 
 	 void getInfo();
-	 void setInfo(int index, std::string name, int stunum, std::string labname);
+	 void setInfo(std::string name, int stunum, std::string labname);
 
 	 std::string getlabname();
 };
@@ -54,12 +52,12 @@ class Undergrad_Student: public Student{
 	// You need to properly define member variable in Undergrad_Student class
  private:
  protected:
-	 int m_freshmenclass = 1;
+	 int m_freshmenclass = 0;
  public:
 	// ******Modify here******
 	// You need to implement get function in detail
 	 void getInfo();
-	 void setInfo(int index, std::string name, int stunum, int freshmenclass);
+	 void setInfo(std::string name, int stunum, int freshmenclass);
 
 	 int getfreshmenclass();
 };
@@ -74,8 +72,6 @@ private:
 	Student* printptr = NULL;
 	int numberofstu = 0;
 
-	Grad_Student** Grad_indexArray = new Grad_Student*[300];
-	Undergrad_Student** Undergrad_indexArray = new Undergrad_Student*[300];
 protected:
 public:
 	// ******Modify here******
