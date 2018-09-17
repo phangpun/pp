@@ -152,19 +152,29 @@ int Manager::find_student(std::string name, int stunum, std::string labname)
   // Finds the Grad_Student object in the student array which is the same to Grad_Student object with given argument
   // This method should print all the information about matched object
   // Returns index of matched object (index of first object = 1), 0 if there's no match
-	Grad_Student indexstudent;
-	Grad_Student target;
-	target.setInfo(name, stunum, labname);
+	Student* Student_present = RightMost_stuptr;
+	Student* Student_next = Student_present->getLptr();
+	Grad_Student inputStudent;
+	inputStudent.setInfo(name, stunum, labname);
 	for (int i = 0; i < numberofstu; i++) {
-		if (indexstudent == target) {
-			if (indexstudent.getlabname() == target.getlabname()) {
-				std::cout << "Found matched one!" << std::endl << std::endl;
-				indexstudent.getInfo();
-				std::cout << std::endl << "find graduate student DONE" << std::endl;
-				return true;
+		if (*Student_present == inputStudent) {
+
+			if ((dynamic_cast<Grad_Student*>(Student_present)) != NULL) {
+				if ((dynamic_cast<Grad_Student*>(Student_present))->getlabname() ==
+					inputStudent.getlabname()) {
+					std::cout << "Found matched one!" << std::endl << std::endl;
+					std::cout << "index : " << (i + 1) << std::endl;
+					inputStudent.getInfo();
+					std::cout << std::endl << "find graduate student DONE" << std::endl;
+					return (i + 1);
+				}
 			}
 		}
+		Student_present = Student_next;
+		Student_next = Student_present->getLptr();
+	
 	}
+	std::cout << "There is no matched one" << std::endl;
 	std::cout << "find graduate student DONE" << std::endl;
 	return 0;
 };
@@ -174,20 +184,30 @@ int Manager::find_student(std::string name, int stunum, int freshmenclass)
   // Finds the Undergrad_Student object in the student array which is the same to Undergrad_Student object with given argument
   // This method should prints all the information about matched object
   // Returns index of matched object (index of first object = 1), 0 if there's no match
-	Undergrad_Student indexstudent;
-	Undergrad_Student target;
-	target.setInfo(name, stunum, freshmenclass);
+	Student* Student_present = RightMost_stuptr;
+	Student* Student_next = Student_present->getLptr();
+	Undergrad_Student inputStudent;
+	inputStudent.setInfo(name, stunum, freshmenclass);
 	for (int i = 0; i < numberofstu; i++) {
-		if (indexstudent == target) {
-			if (indexstudent.getfreshmenclass() == target.getfreshmenclass()) {
-				std::cout << "Found matched one!" << std::endl << std::endl;
-				indexstudent.getInfo();
-				std::cout << std::endl << "find undergraduate student DONE" << std::endl;
-				return true;
+		if (*Student_present == inputStudent) {
+
+			if ((dynamic_cast<Undergrad_Student*>(Student_present)) != NULL) {
+				if ((dynamic_cast<Undergrad_Student*>(Student_present))->getfreshmenclass() ==
+					inputStudent.getfreshmenclass()) {
+					std::cout << "Found matched one!" << std::endl << std::endl;
+					std::cout << "index : " << (i + 1) << std::endl;
+					inputStudent.getInfo();
+					std::cout << std::endl << "find graduate student DONE" << std::endl;
+					return (i + 1);
+				}
 			}
 		}
+		Student_present = Student_next;
+		Student_next = Student_present->getLptr();
+
 	}
-	std::cout << "find undergraduate student DONE" << std::endl;
+	std::cout << "There is no matched one" << std::endl;
+	std::cout << "find graduate student DONE" << std::endl;
 	return 0;
 };
 
