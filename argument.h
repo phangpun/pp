@@ -33,9 +33,9 @@ public:
 	int number();
 	void print();
 	
-	void toinput(std::string* name, int* stunum, std::string* labname);
-	void toinput(std::string* name, int* stunum, int* freshmenclass);
-	void toinput(int* index, std::string* name, int* stunum, std::string* labname);
-	void toinput(int* index, std::string* name, int* stunum, int* freshmenclass);
+	void get_to(std::string* name, int* stunum, std::string* labname);
+	void get_to(std::string* name, int* stunum, int* freshmenclass);
+	void get_to(int* index, std::string* name, int* stunum, std::string* labname);
+	void get_to(int* index, std::string* name, int* stunum, int* freshmenclass);
 	
 };

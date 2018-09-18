@@ -16,10 +16,14 @@ int Manager::add_student(std::string name, int stunum, std::string labname)
 {
   // Adds Grad_Student object with given argument
   // Returns the total number of objects in the student array after adding
+	if (find_student(name, stunum, labname)) {
+		std::cout << "add graduate student FAIL" << std::endl;
+		std::cout << "The student is already in list" << std::endl;
+	}
 	if (numberofstu >= 300) {
-		std::cout << "add undergraduate student FAIL" << std::endl;
+		std::cout << "add graduate student FAIL" << std::endl;
 		std::cout << "There is no capacity. (Max number of student : 300)" << std::endl;
-		return 0;
+		return numberofstu;
 	}
 	Grad_Student* GS = new Grad_Student;
 	if (numberofstu == 0) {
@@ -37,17 +41,23 @@ int Manager::add_student(std::string name, int stunum, std::string labname)
 	GS->setInfo(name, stunum, labname);
 	numberofstu++;
 	std::cout << "add graduate student DONE" << std::endl;
-	return 0;
+	return numberofstu;
 };
 
 int Manager::add_student(std::string name, int stunum, int freshmenclass)
 {
   // Creates Undergrad_Student object with given argument
   // Returns the total number of objects in the student array after adding
+	if (find_student(name, stunum, freshmenclass)) {
+		std::cout << "add undergraduate student FAIL" << std::endl;
+		std::cout << "The student is already in list" << std::endl;
+		return numberofstu;
+	}
+
 	if (numberofstu >= 300) {
 		std::cout << "add undergraduate student FAIL" << std::endl;
 		std::cout << "There is no capacity. (Max number of student : 300)" << std::endl;
-		return 0;
+		return numberofstu;
 	}
 
 	Undergrad_Student* UGS = new Undergrad_Student;
@@ -65,8 +75,9 @@ int Manager::add_student(std::string name, int stunum, int freshmenclass)
 	}
 	UGS->setInfo(name, stunum, freshmenclass);
 	numberofstu++;
+	
 	std::cout << "add undergraduate student DONE" << std::endl;
-	return 0;
+	return numberofstu;
 };
 
 // You need to implement operator overloading and use it in compare_student
@@ -76,36 +87,15 @@ bool Manager::compare_student(int index, std::string name, int stunum, int fresh
   // Compares whether the object with given index argument in the student array is the same to Undergrad_Student object with given arguments followed by index.
   // Returns true if they are the same, false otherwise
 	if (index > numberofstu) {
-		std::cout << "false: index number is bigger than the number of students in data" << std::endl;
-		std::cout << "compare to undergraduate student DONE" << std::endl;
+		std::cout << "Warning: index number is bigger than the number of students in list" << std::endl;
 		return false;
 	}
 
-	Student* Student_present = RightMost_stuptr;
-	Student* Student_next = Student_present->getLptr();
-
-	for (int i = 1; i < index; i++) {
-		Student_present = Student_next;
-		Student_next = Student_present->getLptr();
-	}
-
-	if (dynamic_cast<Undergrad_Student*>(Student_present) != NULL) {
-		Undergrad_Student indexStudent = *(dynamic_cast<Undergrad_Student*>(Student_present));
-		Undergrad_Student inputStudent;
-		inputStudent.setInfo(name, stunum, freshmenclass);
-
-
-		if (indexStudent == inputStudent) {
-			if (indexStudent.getfreshmenclass() == inputStudent.getfreshmenclass()) {
-				std::cout << "true: the same" << std::endl;
-				std::cout << "compare to undergraduate student DONE" << std::endl;
-				return true;
-			}
+	if (find_student(name, stunum, freshmenclass) != 0) {
+		if (index == find_student(name, stunum, freshmenclass)) {
+			return true;
 		}
 	}
-	
-	std::cout << "false: different" << std::endl;
-	std::cout << "compare to undergraduate student DONE" << std::endl;
 	return false;
 };
 
@@ -114,36 +104,15 @@ bool Manager::compare_student(int index, std::string name, int stunum, std::stri
   // Compares whether the (index argument)th object in the student array is the same to Grad_Student object with given given argument follwed by index.
   // Returns true if they are the same, false otherwise
 	if (index > numberofstu) {
-		std::cout << "false: index number is bigger than the number of students in data" << std::endl;
-		std::cout << "compare to undergraduate student DONE" << std::endl;
+		std::cout << "Warning: index number is bigger than the number of students in list" << std::endl;
 		return false;
 	}
 
-	Student* Student_present = RightMost_stuptr;
-	Student* Student_next = Student_present->getLptr();
-
-	for (int i = 1; i < index; i++) {
-		Student_present = Student_next;
-		Student_next = Student_present->getLptr();
-	}
-
-	if (dynamic_cast<Grad_Student*>(Student_present) != NULL) {
-		Grad_Student indexStudent = *(dynamic_cast<Grad_Student*>(Student_present));
-		Grad_Student inputStudent;
-		inputStudent.setInfo(name, stunum, labname);
-
-
-		if (indexStudent == inputStudent) {
-			if (indexStudent.getlabname() == inputStudent.getlabname()) {
-				std::cout << "true: the same" << std::endl;
-				std::cout << "compare to graduate student DONE" << std::endl;
-				return true;
-			}
+	if (find_student(name, stunum, labname) != 0) {
+		if (index == find_student(name, stunum, labname)) {
+			return true;
 		}
 	}
-
-	std::cout << "false: different" << std::endl;
-	std::cout << "compare to graduate student DONE" << std::endl;
 	return false;
 };
 
@@ -152,30 +121,26 @@ int Manager::find_student(std::string name, int stunum, std::string labname)
   // Finds the Grad_Student object in the student array which is the same to Grad_Student object with given argument
   // This method should print all the information about matched object
   // Returns index of matched object (index of first object = 1), 0 if there's no match
+	if (numberofstu == 0) {
+		return 0;
+	}
+
 	Student* Student_present = RightMost_stuptr;
 	Student* Student_next = Student_present->getLptr();
 	Grad_Student inputStudent;
 	inputStudent.setInfo(name, stunum, labname);
 	for (int i = 0; i < numberofstu; i++) {
 		if (*Student_present == inputStudent) {
-
 			if ((dynamic_cast<Grad_Student*>(Student_present)) != NULL) {
 				if ((dynamic_cast<Grad_Student*>(Student_present))->getlabname() ==
 					inputStudent.getlabname()) {
-					std::cout << "Found matched one!" << std::endl << std::endl;
-					std::cout << "index : " << (i + 1) << std::endl;
-					inputStudent.getInfo();
-					std::cout << std::endl << "find graduate student DONE" << std::endl;
 					return (i + 1);
 				}
 			}
 		}
 		Student_present = Student_next;
 		Student_next = Student_present->getLptr();
-	
 	}
-	std::cout << "There is no matched one" << std::endl;
-	std::cout << "find graduate student DONE" << std::endl;
 	return 0;
 };
 
@@ -184,30 +149,26 @@ int Manager::find_student(std::string name, int stunum, int freshmenclass)
   // Finds the Undergrad_Student object in the student array which is the same to Undergrad_Student object with given argument
   // This method should prints all the information about matched object
   // Returns index of matched object (index of first object = 1), 0 if there's no match
+	if (numberofstu == 0) {
+		return 0;
+	}
+
 	Student* Student_present = RightMost_stuptr;
 	Student* Student_next = Student_present->getLptr();
 	Undergrad_Student inputStudent;
-	inputStudent.setInfo(name, stunum, freshmenclass);
+	inputStudent.setInfo (name, stunum, freshmenclass);
 	for (int i = 0; i < numberofstu; i++) {
 		if (*Student_present == inputStudent) {
-
 			if ((dynamic_cast<Undergrad_Student*>(Student_present)) != NULL) {
 				if ((dynamic_cast<Undergrad_Student*>(Student_present))->getfreshmenclass() ==
 					inputStudent.getfreshmenclass()) {
-					std::cout << "Found matched one!" << std::endl << std::endl;
-					std::cout << "index : " << (i + 1) << std::endl;
-					inputStudent.getInfo();
-					std::cout << std::endl << "find graduate student DONE" << std::endl;
 					return (i + 1);
 				}
 			}
 		}
 		Student_present = Student_next;
 		Student_next = Student_present->getLptr();
-
 	}
-	std::cout << "There is no matched one" << std::endl;
-	std::cout << "find graduate student DONE" << std::endl;
 	return 0;
 };
 
@@ -215,146 +176,79 @@ int Manager::delete_student(std::string name, int stunum, std::string labname)
 {
   // Deletes the Grad_Student object in the student array which is the same to Grad_Student object with given argument, does nothing if there's no matching
   // Returns the total number of objects in the student array after deleting
-	Grad_Student indexstudent;
-	Grad_Student target;
-	target.setInfo(name, stunum, labname);
+	if (find_student(name, stunum, labname) != 0) {
+		Student* Student_present = RightMost_stuptr;
+		Student* Student_next = Student_present->getLptr();
 
-	Grad_Student* Gradptr;
-	Undergrad_Student* Undergradptr;
-	for (int i = 0; i < numberofstu; i++) {
-		if (indexstudent == target) {
-			if (indexstudent.getlabname() == target.getlabname()) {
-				std::cout << "Deleting one data" << std::endl;
-
-				if (numberofstu == 1) {
-					RightMost_stuptr = NULL;
-					LeftMost_stuptr = NULL;
-				}
-				else if (Gradptr == RightMost_stuptr) {
-					RightMost_stuptr = (Gradptr->getLptr());
-					(Gradptr->getLptr())->setRptr(NULL);
-					
-
-					while (i < (numberofstu - 1)) {
-						Gradptr->setInfo(Gradptr->getname(),
-							Gradptr->getstunum(),
-							Gradptr->getlabname());
-
-						Undergradptr->setInfo(Undergradptr->getname(),
-							Undergradptr->getstunum(),
-							Undergradptr->getfreshmenclass());
-						
-						i++;
-					}
-				}
-				else if (Gradptr == LeftMost_stuptr) {
-					LeftMost_stuptr = (Gradptr->getRptr());
-					(Gradptr->getRptr())->setLptr(NULL);
-
-					delete Gradptr;
-				}
-				else {
-					(Gradptr->getLptr())->setRptr(Gradptr->getRptr());
-					(Gradptr->getRptr())->setLptr(Gradptr->getLptr());
-
-					delete Gradptr;
-
-					while (i < (numberofstu - 1)) {
-						Gradptr->setInfo(Gradptr->getname(),
-							Gradptr->getstunum(),
-							Gradptr->getlabname());
-
-						Undergradptr->setInfo(Undergradptr->getname(),
-							Undergradptr->getstunum(),
-							Undergradptr->getfreshmenclass());
-
-						i++;
-					}
-
-				}
-				
-				numberofstu--;
-				std::cout << std::endl << "delete graduate student DONE" << std::endl;
-				std::cout << numberofstu << " students are left" << std::endl;
-				return numberofstu;
+		for (int i = 0; i < find_student(name, stunum, labname) - 1; i++) {
+			Student_present = Student_next;
+			Student_next = Student_present->getLptr();
+		}
+		
+		if (numberofstu == 1) {
+			delete Student_present;
+			return --numberofstu;
+		}
+		else {
+			if (Student_present->getRptr() == NULL) {
+				RightMost_stuptr = Student_present->getLptr();
+				(Student_present->getLptr())->setRptr(NULL);
+				delete Student_present;
 			}
+			else if (Student_present->getLptr() == NULL) {
+				LeftMost_stuptr = Student_present->getRptr();
+				(Student_present->getRptr())->setLptr(NULL);
+				delete Student_present;
+			}
+			else {
+				(Student_present->getLptr())->setRptr(Student_present->getRptr());
+				(Student_present->getRptr())->setLptr(Student_present->getLptr());
+				delete Student_present;
+			}
+			return --numberofstu;
 		}
 	}
-	std::cout << "delete graduate student DONE" << std::endl;
-	return 0;
+	
+	return numberofstu;
 };
 
 int Manager::delete_student(std::string name, int stunum, int freshmenclass)
 {
   // Deletes the Undergrad_Student object in the student array which is the same to Undergrad_Student object with given argument, does nothing if there's no matching
   // Returns the total number of objects in the student array after deleting
-	Undergrad_Student indexstudent;
-	Undergrad_Student target;
-	target.setInfo(name, stunum, freshmenclass);
+	if (find_student(name, stunum, freshmenclass) != 0) {
+		Student* Student_present = RightMost_stuptr;
+		Student* Student_next = Student_present->getLptr();
 
-	Undergrad_Student* Undergradptr;
-	Grad_Student* Gradptr;
-	for (int i = 0; i < numberofstu; i++) {
-		if (indexstudent == target) {
-			if (indexstudent.getfreshmenclass() == target.getfreshmenclass()) {
-				std::cout << "Deleting one data" << std::endl;
+		for (int i = 0; i < find_student(name, stunum, freshmenclass) - 1; i++) {
+			Student_present = Student_next;
+			Student_next = Student_present->getLptr();
+		}
 
-				if (numberofstu == 1) {
-					RightMost_stuptr = NULL;
-					LeftMost_stuptr = NULL;
-				}
-				else if (Undergradptr == RightMost_stuptr) {
-					RightMost_stuptr = (Undergradptr->getLptr());
-					(Undergradptr->getLptr())->setRptr(NULL);
-
-
-					while (i < (numberofstu - 1)) {
-						Undergradptr->setInfo(Undergradptr->getname(),
-							Undergradptr->getstunum(),
-							Undergradptr->getfreshmenclass());
-
-						Gradptr->setInfo(Gradptr->getname(),
-							Gradptr->getstunum(),
-							Gradptr->getlabname());
-
-						i++;
-					}
-				}
-				else if (Undergradptr == LeftMost_stuptr) {
-					LeftMost_stuptr = (Undergradptr->getRptr());
-					(Undergradptr->getRptr())->setLptr(NULL);
-					
-					delete Undergradptr;
-				}
-				else {
-					(Undergradptr->getLptr())->setRptr(Undergradptr->getRptr());
-					(Undergradptr->getRptr())->setLptr(Undergradptr->getLptr());
-
-					delete Undergradptr;
-
-					while (i < (numberofstu - 1)) {
-						Undergradptr->setInfo(Undergradptr->getname(),
-							Undergradptr->getstunum(),
-							Undergradptr->getfreshmenclass());
-
-						Gradptr->setInfo(Gradptr->getname(),
-							Gradptr->getstunum(),
-							Gradptr->getlabname());
-
-						i++;
-					}
-
-				}
-
-				numberofstu--;
-				std::cout << std::endl << "delete graduate student DONE" << std::endl;
-				std::cout << numberofstu << " students are left" << std::endl;
-				return numberofstu;
+		if (numberofstu == 1) {
+			delete Student_present;
+			return --numberofstu;
+		}
+		else {
+			if (Student_present->getRptr() == NULL) {
+				RightMost_stuptr = Student_present->getLptr();
+				(Student_present->getLptr())->setRptr(NULL);
+				delete Student_present;
 			}
+			else if (Student_present->getLptr() == NULL) {
+				LeftMost_stuptr = Student_present->getRptr();
+				(Student_present->getRptr())->setLptr(NULL);
+				delete Student_present;
+			}
+			else {
+				(Student_present->getLptr())->setRptr(Student_present->getRptr());
+				(Student_present->getRptr())->setLptr(Student_present->getLptr());
+				delete Student_present;
+			}
+			return --numberofstu;
 		}
 	}
-	std::cout << "delete graduate student DONE" << std::endl;
-	return 0;
+	return numberofstu;
 };
 
 int Manager::print_all()
@@ -370,7 +264,7 @@ int Manager::print_all()
 			printptr = printptr->getLptr();
 		}
 		std::cout << "print all DONE" << std::endl;
-		std::cout << numberofstu<< " students are in lists" << std::endl;
+		std::cout << "left number : " << numberofstu << std::endl;
 		return numberofstu;
 	}
 	else {

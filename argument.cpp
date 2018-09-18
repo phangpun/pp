@@ -247,25 +247,25 @@ void argument::print() {
 	std::cout << "print() : " << _string << std::endl;
 }
 
-void argument::toinput(std::string *name, int *stunum, std::string *labname) {
+void argument::get_to(std::string *name, int *stunum, std::string *labname) {
 	*name = arg1;
 	*stunum = std::stoi(arg2);
 	*labname = arg3;
 }
 
-void argument::toinput(std::string* name, int* stunum, int* freshmenclass) {
+void argument::get_to(std::string* name, int* stunum, int* freshmenclass) {
 	*name = arg1;
 	*stunum = std::stoi(arg2);
 	*freshmenclass = std::stoi(arg3);
 }
 
-void argument::toinput(int* index, std::string* name, int* stunum, std::string* labname) {
+void argument::get_to(int* index, std::string* name, int* stunum, std::string* labname) {
 	*index = std::stoi(arg1);
 	*name = arg2;
 	*stunum = std::stoi(arg3);
 	*labname = arg4;
 }
-void argument::toinput(int* index, std::string* name, int* stunum, int* freshmenclass) {
+void argument::get_to(int* index, std::string* name, int* stunum, int* freshmenclass) {
 	*index = std::stoi(arg1);
 	*name = arg2;
 	*stunum = std::stoi(arg3);
