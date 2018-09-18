@@ -139,7 +139,9 @@ int Manager::find_student(std::string name, int stunum, std::string labname)
 			}
 		}
 		Student_present = Student_next;
-		Student_next = Student_present->getLptr();
+		if (Student_present != NULL) {
+			Student_next = Student_present->getLptr();
+		}
 	}
 	return 0;
 };
@@ -167,7 +169,9 @@ int Manager::find_student(std::string name, int stunum, int freshmenclass)
 			}
 		}
 		Student_present = Student_next;
-		Student_next = Student_present->getLptr();
+		if (Student_present != NULL) {
+			Student_next = Student_present->getLptr();
+		}
 	}
 	return 0;
 };

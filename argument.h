@@ -6,36 +6,60 @@
 
 // argument class include argument error handling
 
-//FLAG for isWrong() function
-const char FIRST_INPUT = 0;
-const char ADD_INPUT = 1;
-const char COMPARE_INPUT = 2;
-const char FIND_INPUT = 3;
-const char DELETE_INPUT = 4;
-const char GRAD = 5;
-
+enum COMMAND_CASE {ADD,COMPARE,FIND,DELETE};
 
 class argument {
 private:
-	std::string _string = "ARGUMENT_STRING";
-	std::string arg1;
-	std::string arg2;
-	std::string arg3;
-	std::string arg4;
-	bool checkfine(std::string _string, const char FLAG, int gradnumber);
-
 protected:
+	std::string linestring;
+	virtual void print_intro();
+	virtual bool is_valid();
+	void print_error();
+	void get_line();
 public:
-	void set(std::string inputstring);
-	std::string get();
-	char firstchar();
-	bool isWrong(const char FLAG, int gradnumber = 0);
-	int number();
-	void print();
-	
-	void get_to(std::string* name, int* stunum, std::string* labname);
-	void get_to(std::string* name, int* stunum, int* freshmenclass);
-	void get_to(int* index, std::string* name, int* stunum, std::string* labname);
-	void get_to(int* index, std::string* name, int* stunum, int* freshmenclass);
-	
+};
+
+
+class argument_command : public argument {
+private:
+	char command;
+protected:
+	void print_intro() override;
+	bool is_valid() override;
+	char output(std::string inputstring);
+public:
+	char input_handling();
+};
+
+class argument_grad : public argument {
+private:
+	int grad_index;
+	COMMAND_CASE com_case;
+protected:
+	void print_intro() override;
+	bool is_valid() override;
+	int output(std::string inputstring);
+	void setcase(COMMAND_CASE inputcase);
+public:
+	int input_handling(COMMAND_CASE inputcase);
+};
+
+class argument_format : public argument {
+private:
+	std::string arg1, arg2, arg3, arg4;
+	int grad_index;
+	COMMAND_CASE com_case;
+
+	int arg_divide();
+	bool onlyalpha(std::string inputstring);
+	bool onlynumber(std::string inputstring);
+protected:
+	void print_intro() override;
+	bool is_valid() override;
+	void setcase(COMMAND_CASE inputcase);
+	void setgradindex(int gradindex);
+public:
+	void input_handling(COMMAND_CASE inputcase, int gradindex, int* index, std::string* name, int* stunum, int* freshmenclass);
+	void input_handling(COMMAND_CASE inputcase, int gradindex, int* index, std::string* name, int* stunum, std::string* labname);
+
 };
