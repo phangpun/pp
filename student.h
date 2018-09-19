@@ -1,24 +1,17 @@
-#include <iostream>
-#include <string>
 // //***************************************************************
 // //                   CLASS USED IN PROJECT
 // //****************************************************************
 
 class Student{
-	// ******Modify here******
-	// You need to properly define member variable in Student class
  private:
  protected:
 	 int m_stunum = 0;
 	 std::string m_name = "M_NAME";
-
-	 Student* m_Rightptr;
-	 Student* m_Leftptr;
+	 
+	 //doubly linked list
+	 Student* m_Rightptr; //pointer to Right Student data
+	 Student* m_Leftptr;  //pointer to Left Student data
  public:
-	// ******Modify here******
-	// You need to implement get function which prints out every information about student argument in pure virtual function here
-
-
 	 virtual void getInfo();
 	 virtual void setInfo(std::string name, int stunum);
 	 void setRptr(Student* studentptr);
@@ -28,35 +21,25 @@ class Student{
 
 	 std::string getname();
 	 int getstunum();
-
 };
 
 class Grad_Student: public Student{
-	// ******Modify here******
-	// You need to properly define member variable in Grad_Student class
  private:
  protected:
 	 std::string m_labname = "M_LAB_NAME";
  public:	
-	// ******Modify here******
-	// You need to implement get function in detail
-
-	 void getInfo();
+	 virtual void getInfo() override;
 	 void setInfo(std::string name, int stunum, std::string labname);
 
 	 std::string getlabname();
 };
 
 class Undergrad_Student: public Student{
-	// ******Modify here******
-	// You need to properly define member variable in Undergrad_Student class
  private:
  protected:
 	 int m_freshmenclass = 0;
  public:
-	// ******Modify here******
-	// You need to implement get function in detail
-	 void getInfo();
+	 virtual void getInfo() override;
 	 void setInfo(std::string name, int stunum, int freshmenclass);
 
 	 int getfreshmenclass();
@@ -64,18 +47,14 @@ class Undergrad_Student: public Student{
 
 
 class Manager {
-	// ******Modify here******
-	// You need to properly define member variable in Manager class
 private:
-	Student* RightMost_stuptr = NULL;
-	Student* LeftMost_stuptr = NULL;
-	Student* printptr = NULL;
-	int numberofstu = 0;
+	Student* RightMost_stuptr = NULL; //Head
+	Student* LeftMost_stuptr = NULL; //Tail
+	Student* printptr = NULL; //pointer for print_all() method
+	int numberofstu = 0; //total number of student in list
 
 protected:
 public:
-	// ******Modify here******
-	// You need to implement every methods in Manager class
 	int add_student(std::string name, int stunum, std::string labname);
 	int add_student(std::string name, int stunum, int freshmenclass);
 	bool compare_student(int index, std::string name, int stunum, std::string labname);
@@ -86,7 +65,7 @@ public:
 	int delete_student(std::string name, int stunum, int freshmenclass);
 	int print_all();
 
-	~Manager();
+	~Manager();//destructor to remove all data in list
 };
 
 bool operator == (const Student& x, const Student& y);
